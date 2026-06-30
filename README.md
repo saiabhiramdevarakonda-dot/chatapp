@@ -1,384 +1,261 @@
-\# 🤖 ChatApp
+# 🤖 AI ChatApp – Full Stack AI Chatbot with Gemini & RAG
 
+A full-stack AI Chatbot System built using **Angular**, **Node.js**, **Express.js**, **TypeScript**, and **Google Gemini API**.
 
+The project integrates **Retrieval-Augmented Generation (RAG)** with semantic search and local embeddings to provide intelligent, context-aware responses from a custom knowledge base while also supporting general AI conversations using Google's Gemini model.
 
-A full-stack AI Chatbot application built with \*\*Angular\*\*, \*\*Node.js\*\*, \*\*Express.js\*\*, \*\*TypeScript\*\*, \*\*Google Gemini API\*\*, and \*\*Retrieval-Augmented Generation (RAG)\*\*.
+---
 
+# 📖 About
 
+This project was developed as part of my learning journey in **Full Stack Development** and **Generative AI**. It demonstrates frontend-backend integration, REST APIs, Retrieval-Augmented Generation (RAG), semantic search, and Google Gemini API integration.
 
-This project demonstrates modern AI application development with a responsive frontend, intelligent chatbot backend, and agentic backend APIs.
+---
 
-
-
-\---
-
-
-
-\## 📂 Project Structure
-
-
+# 🏗️ Project Architecture
 
 ```
+                    Angular Frontend
+                           │
+                           ▼
+              Chat Backend (Express.js)
+                     │             │
+                     ▼             ▼
+              Google Gemini     RAG Engine
+                                  │
+                    ┌─────────────┴─────────────┐
+                    ▼                           ▼
+               FAQ Database            Knowledge Base
 
+                     │
+                     ▼
+
+            Agentic Backend (Express + TypeScript)
+                     │
+        ┌────────────┼────────────┐
+        ▼            ▼            ▼
+     Orders API  Customers API  Weather API
+```
+
+---
+
+# 📂 Project Structure
+
+```
 chatapp
-
 │
-
 ├── technyks-chat-app/      # Angular Frontend
-
 ├── chat-app-backend/       # AI Chatbot Backend (Gemini + RAG)
-
-└── agentic-app-backend/    # Agentic Backend (Orders, Customers, Weather)
-
+└── agentic-app-backend/    # Agentic Backend APIs
 ```
 
+---
 
+# 🚀 Features
 
-\---
+## 💻 Frontend
 
+- Modern Angular Chat Interface
+- Responsive User Interface
+- API Integration
+- Environment Configuration
 
+## 🤖 AI Chat Backend
 
-\## 🚀 Features
+- Google Gemini 2.5 Flash Integration
+- Retrieval-Augmented Generation (RAG)
+- Semantic Search
+- Local Embedding Generation
+- FAQ Retrieval
+- Knowledge Base Retrieval
+- Intelligent AI Responses
+- REST API
 
+## 🧠 Agentic Backend
 
+- Orders API
+- Customers API
+- Weather API
+- Chat API
+- Modular Express Architecture
+- TypeScript Support
 
-\### 💻 Frontend (Angular)
+---
 
+# 🛠️ Tech Stack
 
+## Frontend
 
-\- Modern chat interface
+- Angular
+- TypeScript
+- HTML
+- SCSS
 
-\- Responsive UI
+## Backend
 
-\- API integration
+- Node.js
+- Express.js
+- JavaScript
+- TypeScript
 
-\- Environment configuration
+## Artificial Intelligence
 
+- Google Gemini API
+- Gemini 2.5 Flash
+- Retrieval-Augmented Generation (RAG)
+- Local Embeddings
+- Xenova/all-MiniLM-L6-v2
+- Cosine Similarity Search
 
+## Tools
 
-\### 🤖 Chat Backend
+- Git
+- GitHub
+- Visual Studio Code
+- npm
 
+---
 
+# 📚 Skills Demonstrated
 
-\- Google Gemini API integration
+- Full Stack Development
+- REST API Development
+- Angular Development
+- Express.js
+- TypeScript
+- JavaScript
+- Artificial Intelligence
+- Generative AI
+- Retrieval-Augmented Generation (RAG)
+- Semantic Search
+- API Integration
+- Git & GitHub
 
-\- Retrieval-Augmented Generation (RAG)
+---
 
-\- Semantic search
+# ⚙️ Installation
 
-\- Local embedding generation
-
-\- FAQ \& Knowledge Base support
-
-\- REST API
-
-
-
-\### 🧠 Agentic Backend
-
-
-
-\- Orders API
-
-\- Customers API
-
-\- Weather API
-
-\- Chat API
-
-\- Modular architecture using Express and TypeScript
-
-
-
-\---
-
-
-
-\## 🛠️ Tech Stack
-
-
-
-\### Frontend
-
-
-
-\- Angular
-
-\- TypeScript
-
-\- HTML
-
-\- SCSS
-
-
-
-\### Backend
-
-
-
-\- Node.js
-
-\- Express.js
-
-\- JavaScript
-
-\- TypeScript
-
-
-
-\### AI Technologies
-
-
-
-\- Google Gemini API
-
-\- Retrieval-Augmented Generation (RAG)
-
-\- Local Embeddings
-
-\- Cosine Similarity Search
-
-
-
-\### Tools
-
-
-
-\- Git
-
-\- GitHub
-
-\- Visual Studio Code
-
-\- npm
-
-
-
-\---
-
-
-
-\## ⚙️ Installation
-
-
-
-\### Clone the repository
-
-
+## Clone the Repository
 
 ```bash
-
-git clone https://github.com/YOUR\_USERNAME/chatapp.git
-
+git clone https://github.com/saiabhiramdevarakonda-dot/chatapp.git
 ```
 
+---
 
-
-\### Install Frontend
-
-
+## Install Frontend
 
 ```bash
-
 cd technyks-chat-app
-
 npm install
-
 ng serve
-
 ```
 
-
-
-Frontend:
-
-
+Frontend runs at:
 
 ```
-
 http://localhost:4200
-
 ```
 
+---
 
-
-\### Install Chat Backend
-
-
+## Install Chat Backend
 
 ```bash
-
 cd chat-app-backend
-
 npm install
-
 npm run dev
-
 ```
 
-
-
-Backend:
-
-
+Backend runs at:
 
 ```
-
 http://localhost:3000
-
 ```
 
+---
 
-
-\### Install Agentic Backend
-
-
+## Install Agentic Backend
 
 ```bash
-
 cd agentic-app-backend
-
 npm install
-
 npm run dev
-
 ```
 
-
-
-Recommended:
-
-
+Recommended port:
 
 ```
-
 http://localhost:3001
-
 ```
 
+---
 
+# 🔑 Environment Variables
 
-\---
-
-
-
-\## 🔑 Environment Variables
-
-
-
-Create a `.env` file in each backend.
-
-
+Create a `.env` file inside each backend.
 
 Example:
 
-
-
 ```env
-
-GEMINI\_API\_KEY=YOUR\_API\_KEY
-
-GEMINI\_MODEL=gemini-2.5-flash
-
+GEMINI_API_KEY=YOUR_API_KEY
+GEMINI_MODEL=gemini-2.5-flash
 PORT=3000
-
 ```
 
+---
 
+# 📡 API Endpoints
 
-\---
-
-
-
-\## 📡 API Endpoints
-
-
-
-\### Chat Backend
-
-
+## Chat Backend
 
 ```
-
 POST /api/chat
-
 ```
 
-
-
-\### Agentic Backend
-
-
+## Agentic Backend
 
 ```
-
-GET /api/orders
-
-GET /api/orders/:id
-
-GET /api/customers
-
-GET /api/weather?q=city
-
-POST /api/chat
-
+GET    /api/orders
+GET    /api/orders/:id
+GET    /api/customers
+GET    /api/weather?q=city
+POST   /api/chat
 ```
+---
 
+# 🚀 Planned Enhancements
 
+- User Authentication
+- Chat History
+- Database Integration
+- MongoDB Support
+- Vector Database
+- Multi-Agent Architecture
+- Voice Assistant
+- File Upload Support
+- Streaming AI Responses
+- Docker Deployment
+- CI/CD Pipeline
 
-\---
+---
 
+# 👨‍💻 Author
 
-
-\## 📈 Future Improvements
-
-
-
-\- User Authentication
-
-\- Chat History
-
-\- Database Integration
-
-\- Vector Database Support
-
-\- Multi-Agent Workflows
-
-\- File Upload Support
-
-\- Voice Assistant
-
-\- Streaming AI Responses
-
-
-
-\---
-
-
-
-\## 👨‍💻 Author
-
-
-
-\*\*Abhiram Devarakonda\*\*
-
-
+**Abhiram Devarakonda**
 
 B.Tech Computer Science Engineering
 
+Interested in Artificial Intelligence, Machine Learning, Full Stack Development, and Generative AI.
 
+---
 
-Passionate about AI, Machine Learning, Full-Stack Development, and Intelligent Systems.
+# 🙏 Acknowledgements
 
+This project was developed while learning Full Stack Development and Generative AI concepts through online coursework. It was further enhanced with additional features, debugging, and improvements including Retrieval-Augmented Generation (RAG), Google Gemini API integration, semantic search, and an agentic backend.
 
+---
 
-\---
+# ⭐ Support
 
-
-
-\## ⭐ Support
-
-
-
-If you found this project useful, please consider giving it a ⭐ on GitHub.
-
+If you found this project helpful, please consider giving it a ⭐ on GitHub.
