@@ -1,0 +1,26 @@
+{
+  "name": "chat-app-backend",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node --env-file=.env server.js",
+    "dev": "node --watch --env-file=.env server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@google/genai": "^2.6.0",
+    "@google/generative-ai": "^0.17.1",
+    "compute-cosine-similarity": "^1.1.0",
+    "cors": "^2.8.6",
+    "dotenv": "^16.6.1",
+    "express": "^5.2.1",
+    "openai": "^6.39.0"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.3"
+  }
+}

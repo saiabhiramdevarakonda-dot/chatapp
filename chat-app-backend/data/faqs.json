@@ -1,0 +1,18 @@
+[
+    {
+        "question": "How do I reset my password?",
+        "answer": "To reset your password, click on the 'Forgot Password' link on the login page and follow the instructions."
+    },
+    {
+        "question": "How can I contact customer support?",
+        "answer": "You can contact our customer support team via email at support@example.com."
+    },
+    {
+        "question": "What are your business hours?",
+        "answer": "Our business hours are Monday to Friday, 9 AM to 5 PM."
+    },
+    {
+        "question": "Is my data secure?",
+        "answer": "Yes, we take data security seriously and use industry-standard measures to protect your information."
+    }
+]
