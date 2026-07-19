@@ -237,21 +237,6 @@ Answer questions from the knowledge base.
 
 ---
 
-# 📸 Screenshots
-
-Add screenshots here.
-
-Example:
-
-```
-docs/screenshots/chat.png
-
-docs/screenshots/orders.png
-
-docs/screenshots/mcp.png
-```
-
----
 
 # 🎯 Learning Outcomes
 
