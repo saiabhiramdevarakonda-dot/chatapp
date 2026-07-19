@@ -1,84 +1,91 @@
-# 🤖 AI ChatApp – Full Stack AI Chatbot with Gemini & RAG
+# 🤖 Agentic AI Chat Application
 
-A full-stack AI Chatbot System built using **Angular**, **Node.js**, **Express.js**, **TypeScript**, and **Google Gemini API**.
+An end-to-end **Agentic AI Chat Application** built with **Angular**, **Node.js**, **Express**, **MongoDB**, **Google Gemini/OpenAI**, **Model Context Protocol (MCP)**, and **Retrieval-Augmented Generation (RAG)**.
 
-The project integrates **Retrieval-Augmented Generation (RAG)** with semantic search and local embeddings to provide intelligent, context-aware responses from a custom knowledge base while also supporting general AI conversations using Google's Gemini model.
-
----
-
-# 📖 About
-
-This project was developed as part of my learning journey in **Full Stack Development** and **Generative AI**. It demonstrates frontend-backend integration, REST APIs, Retrieval-Augmented Generation (RAG), semantic search, and Google Gemini API integration.
-
----
-
-# 🏗️ Project Architecture
-
-```
-                    Angular Frontend
-                           │
-                           ▼
-              Chat Backend (Express.js)
-                     │             │
-                     ▼             ▼
-              Google Gemini     RAG Engine
-                                  │
-                    ┌─────────────┴─────────────┐
-                    ▼                           ▼
-               FAQ Database            Knowledge Base
-
-                     │
-                     ▼
-
-            Agentic Backend (Express + TypeScript)
-                     │
-        ┌────────────┼────────────┐
-        ▼            ▼            ▼
-     Orders API  Customers API  Weather API
-```
-
----
-
-# 📂 Project Structure
-
-```
-chatapp
-│
-├── technyks-chat-app/      # Angular Frontend
-├── chat-app-backend/       # AI Chatbot Backend (Gemini + RAG)
-└── agentic-app-backend/    # Agentic Backend APIs
-```
+The application demonstrates how Large Language Models (LLMs) can intelligently use tools, retrieve knowledge from documents, and interact with a real MongoDB database to answer user queries and perform actions.
 
 ---
 
 # 🚀 Features
 
-## 💻 Frontend
+### 💬 AI Chat Assistant
 
-- Modern Angular Chat Interface
-- Responsive User Interface
-- API Integration
-- Environment Configuration
+* Natural language conversations
+* Powered by Google Gemini/OpenAI
+* Context-aware responses
 
-## 🤖 AI Chat Backend
+### 🛠️ Agentic AI
 
-- Google Gemini 2.5 Flash Integration
-- Retrieval-Augmented Generation (RAG)
-- Semantic Search
-- Local Embedding Generation
-- FAQ Retrieval
-- Knowledge Base Retrieval
-- Intelligent AI Responses
-- REST API
+* Model Context Protocol (MCP)
+* Intelligent tool selection
+* Multi-step reasoning
+* Tool calling
 
-## 🧠 Agentic Backend
+### 📦 Order Management
 
-- Orders API
-- Customers API
-- Weather API
-- Chat API
-- Modular Express Architecture
-- TypeScript Support
+* View all orders
+* Search order by ID
+* Search customer orders
+* Create new orders
+* MongoDB persistence
+
+### 👥 Customer Management
+
+* View customers
+* Search customers
+* MongoDB integration
+
+### 📚 RAG (Retrieval-Augmented Generation)
+
+* Local knowledge base
+* Semantic retrieval
+* AI-generated answers using retrieved context
+
+### 🌦️ External Tool Integration
+
+* Weather tool support
+* Multiple MCP tools
+
+### 🗄️ Database
+
+* MongoDB
+* Mongoose ODM
+* Real-time CRUD operations
+
+### 🎨 Frontend
+
+* Angular
+* Responsive UI
+* Chat interface
+
+---
+
+# 🏗️ Architecture
+
+```
+User
+   │
+   ▼
+Angular Frontend
+   │
+   ▼
+Express Backend
+   │
+   ▼
+AI Agent
+   │
+   ├──────────────► MCP Tools
+   │                  │
+   │                  ├── Customer Tool
+   │                  ├── Order Tool
+   │                  └── Weather Tool
+   │
+   ├──────────────► RAG
+   │                  │
+   │                  └── Knowledge Base
+   │
+   └──────────────► MongoDB
+```
 
 ---
 
@@ -86,157 +93,195 @@ chatapp
 
 ## Frontend
 
-- Angular
-- TypeScript
-- HTML
-- SCSS
+* Angular
+* TypeScript
+* HTML
+* CSS
 
 ## Backend
 
-- Node.js
-- Express.js
-- JavaScript
-- TypeScript
+* Node.js
+* Express.js
+* TypeScript
 
-## Artificial Intelligence
+## AI
 
-- Google Gemini API
-- Gemini 2.5 Flash
-- Retrieval-Augmented Generation (RAG)
-- Local Embeddings
-- Xenova/all-MiniLM-L6-v2
-- Cosine Similarity Search
+* Google Gemini
+* OpenAI
+* MCP SDK
+* RAG
 
-## Tools
+## Database
 
-- Git
-- GitHub
-- Visual Studio Code
-- npm
+* MongoDB
+* Mongoose
+
+## Development Tools
+
+* Git
+* GitHub
+* VS Code
+* Postman
 
 ---
 
-# 📚 Skills Demonstrated
+# 📁 Project Structure
 
-- Full Stack Development
-- REST API Development
-- Angular Development
-- Express.js
-- TypeScript
-- JavaScript
-- Artificial Intelligence
-- Generative AI
-- Retrieval-Augmented Generation (RAG)
-- Semantic Search
-- API Integration
-- Git & GitHub
+```
+chatapp/
+│
+├── technyks-chat-app/        # Angular Frontend
+│
+├── chat-app-backend/         # Chat Backend
+│
+├── agentic-app-backend/      # Agent Backend
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── services/
+│   ├── mcp/
+│   ├── rag/
+│   ├── data/
+│   └── config/
+│
+└── README.md
+```
 
 ---
 
 # ⚙️ Installation
 
-## Clone the Repository
+## Clone Repository
 
 ```bash
 git clone https://github.com/saiabhiramdevarakonda-dot/chatapp.git
+
+cd chatapp
 ```
 
 ---
 
-## Install Frontend
+## Install Dependencies
 
 ```bash
-cd technyks-chat-app
 npm install
-ng serve
 ```
 
-Frontend runs at:
+Install dependencies inside:
 
-```
-http://localhost:4200
-```
+* technyks-chat-app
+* chat-app-backend
+* agentic-app-backend
 
 ---
 
-## Install Chat Backend
+## Environment Variables
 
-```bash
-cd chat-app-backend
-npm install
-npm run dev
-```
-
-Backend runs at:
-
-```
-http://localhost:3000
-```
-
----
-
-## Install Agentic Backend
-
-```bash
-cd agentic-app-backend
-npm install
-npm run dev
-```
-
-Recommended port:
-
-```
-http://localhost:3001
-```
-
----
-
-# 🔑 Environment Variables
-
-Create a `.env` file inside each backend.
+Create a `.env` file inside the backend project.
 
 Example:
 
 ```env
-GEMINI_API_KEY=YOUR_API_KEY
-GEMINI_MODEL=gemini-2.5-flash
 PORT=3000
+
+MONGODB_URI=mongodb://localhost:27017/testDB
+
+OPENAI_API_KEY=YOUR_OPENAI_KEY
+
+GEMINI_API_KEY=YOUR_GEMINI_KEY
 ```
 
 ---
 
-# 📡 API Endpoints
+## Start MongoDB
 
-## Chat Backend
-
-```
-POST /api/chat
+```bash
+mongod
 ```
 
-## Agentic Backend
-
-```
-GET    /api/orders
-GET    /api/orders/:id
-GET    /api/customers
-GET    /api/weather?q=city
-POST   /api/chat
-```
 ---
 
-# 🚀 Planned Enhancements
+## Start Backend
 
-- User Authentication
-- Chat History
-- Database Integration
-- MongoDB Support
-- Vector Database
-- Multi-Agent Architecture
-- Voice Assistant
-- File Upload Support
-- Streaming AI Responses
-- Docker Deployment
-- CI/CD Pipeline
+```bash
+cd agentic-app-backend
+
+npm run dev
+```
+
+---
+
+## Start Angular Frontend
+
+```bash
+cd technyks-chat-app
+
+ng serve
+```
+
+---
+
+# 💬 Example Prompts
+
+```
+Show all orders
+
+Create an order for customer <customer-id>
+
+Show customer details
+
+What's the weather in Hyderabad?
+
+Answer questions from the knowledge base.
+```
+
+---
+
+# 📸 Screenshots
+
+Add screenshots here.
+
+Example:
+
+```
+docs/screenshots/chat.png
+
+docs/screenshots/orders.png
+
+docs/screenshots/mcp.png
+```
+
+---
+
+# 🎯 Learning Outcomes
+
+This project demonstrates:
+
+* Agentic AI
+* MCP (Model Context Protocol)
+* Tool Calling
+* RAG
+* MongoDB Integration
+* REST APIs
+* Angular Frontend
+* Express Backend
+* TypeScript
+* LLM Integration
+* Full-Stack AI Development
+
+---
+
+# 🔮 Future Improvements
+
+* Authentication (JWT)
+* Role-Based Access Control
+* Conversation History
+* Docker Support
+* Kubernetes Deployment
+* Vector Database (FAISS/Pinecone)
+* CI/CD Pipeline
+* Unit & Integration Testing
+* Cloud Deployment (AWS/Azure/GCP)
 
 ---
 
@@ -246,16 +291,10 @@ POST   /api/chat
 
 B.Tech Computer Science Engineering
 
-Interested in Artificial Intelligence, Machine Learning, Full Stack Development, and Generative AI.
+GitHub: https://github.com/saiabhiramdevarakonda-dot
 
 ---
 
-# 🙏 Acknowledgements
+# ⭐ Acknowledgements
 
-This project was developed while learning Full Stack Development and Generative AI concepts through online coursework. It was further enhanced with additional features, debugging, and improvements including Retrieval-Augmented Generation (RAG), Google Gemini API integration, semantic search, and an agentic backend.
-
----
-
-# ⭐ Support
-
-If you found this project helpful, please consider giving it a ⭐ on GitHub.
+This project was developed as part of an AI Agent/Agentic AI learning journey, demonstrating modern AI application development using LLMs, MCP, RAG, MongoDB, and Angular.
