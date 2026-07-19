@@ -1,159 +1,95 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenAI } from "@google/genai";
 
 class GeminiProvider {
-
-  constructor(apikey, modelName) {
-
-    this.apikey = apikey?.trim();
+  constructor(apiKey, modelName) {
+    this.apiKey = apiKey?.trim();
     this.modelName = modelName?.trim();
 
-    if (!this.apikey) {
-      throw new Error(
-        "API key is required for GeminiProvider"
-      );
+    if (!this.apiKey) {
+      throw new Error("API key is required.");
     }
 
     if (!this.modelName) {
-      throw new Error(
-        "Model name is required for GeminiProvider"
-      );
+      throw new Error("Model name is required.");
     }
 
-    console.log(
-      `[GeminiProvider] Initialized with model: "${this.modelName}"`
-    );
-
-    this.genAi = new GoogleGenerativeAI(
-      this.apikey
-    );
-
-    // Create Gemini model with generation configuration
-    this.model = this.genAi.getGenerativeModel({
-
-      model: this.modelName,
-
-      generationConfig: {
-
-        temperature: 0.7,
-
-        topP: 0.95,
-
-        topK: 40,
-
-        maxOutputTokens: 2048
-
-      }
-
+    this.ai = new GoogleGenAI({
+      apiKey: this.apiKey,
     });
-
   }
 
   async generateResponse(prompt) {
-
     const maxRetries = 3;
-    let attempt = 0;
-    let delay = 1000;
+    let retry = 0;
+    let delay = 2000;
 
-    while (attempt < maxRetries) {
-
+    while (retry < maxRetries) {
       try {
+        const response = await this.ai.models.generateContent({
+          model: this.modelName,
+          contents: prompt,
+          config: {
+            temperature: 0.7,
+            topP: 0.95,
+            topK: 40,
+            maxOutputTokens: 2048,
+          },
+        });
 
-        const result =
-          await this.model.generateContent(
-            prompt
-          );
-
-        const response =
-          result.response;
-
-        if (
-          !response.candidates ||
-          response.candidates.length === 0
-        ) {
-
-          return "The AI did not return any results.";
-
-        }
-
-        return response.text();
-
+        return response.text || "No response generated.";
       } catch (error) {
-
-        console.error(
-          `Gemini Error (attempt ${attempt + 1}/${maxRetries}):`,
-          error
-        );
-
         if (
-          error.status >= 500 &&
-          attempt < maxRetries - 1
+          (error.status === 429 || error.status === 503) &&
+          retry < maxRetries - 1
         ) {
-
-          console.log(
-            `Retrying in ${delay / 1000} seconds...`
-          );
-
-          await new Promise(resolve =>
+          await new Promise((resolve) =>
             setTimeout(resolve, delay)
           );
 
+          retry++;
           delay *= 2;
-          attempt++;
-
-        } else {
-
-          throw new Error(
-            `Failed to generate response: ${error.message}`
-          );
-
+          continue;
         }
 
+        throw new Error(
+          `Failed to generate response: ${
+            error?.message || "Unknown Gemini error"
+          }`
+        );
       }
-
     }
 
+    throw new Error("Maximum retries exceeded.");
   }
 
   async generateEmbeddings(
     data,
     taskType = "RETRIEVAL_QUERY"
   ) {
-
     try {
+      const response = await this.ai.models.embedContent({
+        model: "gemini-embedding-001",
+        contents: data,
+        config: {
+          taskType,
+        },
+      });
 
-      const response =
-        await this.genAi.models.embedContent({
+      if (!response.embeddings || response.embeddings.length === 0) {
+        throw new Error("No embeddings generated.");
+      }
 
-          model: "gemini-embedding-001",
-
-          content: data,
-
-          taskType
-
-        });
-
-      const embeddings =
-        response.embeddings.map(
-          e => e.values
-        );
-
-      return embeddings;
-
+      return response.embeddings.map(
+        (embedding) => embedding.values
+      );
     } catch (error) {
-
-      console.error(
-        "Gemini Embedding Error:",
-        error
-      );
-
       throw new Error(
-        `Failed to generate embeddings: ${error.message}`
+        `Failed to generate embeddings: ${
+          error?.message || "Unknown Gemini error"
+        }`
       );
-
     }
-
   }
-
 }
 
 export default GeminiProvider;

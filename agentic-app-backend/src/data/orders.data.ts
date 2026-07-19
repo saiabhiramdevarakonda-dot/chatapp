@@ -16,6 +16,7 @@ export const MOCK_ORDERS = [
         id: 3,
         product: "Tablet",
         price: 600,
-        customerId: 1
+        customerId: 1,
+        orderDate: new Date("2023-01-22"),
     }
 ];

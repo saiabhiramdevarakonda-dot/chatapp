@@ -6,25 +6,33 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node --watch --env-file=.env src/index.ts",
-    "start": "node --env-file=.env src/index.ts"
+    "dev": "node --watch --env-file=.env src/services/index.ts",
+    "start": "node --env-file=.env src/services/index.ts",
+    "rag:ingest": " node --env-file=.env src/rag/ingest.ts src/data/rag_docs"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@google/genai": "^2.7.0",
-    "@google/generative-ai": "^0.24.1",
+    "@chroma-core/default-embed": "^0.1.9",
+    "@google/genai": "^1.52.0",
     "@modelcontextprotocol/sdk": "^1.29.0",
+    "chromadb": "^3.5.0",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "mongoose": "^9.7.4",
+    "openai": "^6.47.0",
+    "pg": "^8.22.0",
+    "pgvector": "^0.3.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
     "@type/cors": "github:types/express",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
+    "@types/pg": "^8.20.0",
+    "tsx": "^4.23.1",
     "typescript": "^6.0.3"
   }
 }

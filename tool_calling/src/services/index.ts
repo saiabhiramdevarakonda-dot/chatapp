@@ -1,10 +1,10 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import chatRoutes from './routes/chat.route.ts';
-import customerRoutes from './routes/customer.route.ts';
-import orderRoutes from './routes/order.route.ts';
-import weatherRoutes from './routes/weather.route.ts';
+import chatRoutes from '../routes/chat.route.ts';
+import customerRoutes from '../routes/customer.route.ts';
+import orderRoutes from '../routes/order.route.ts';
+import weatherRoutes from '../routes/weather.route.ts';
 
 
 const app = express();

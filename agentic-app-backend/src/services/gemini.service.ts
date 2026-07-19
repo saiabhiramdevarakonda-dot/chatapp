@@ -1,119 +1,336 @@
-import { GoogleGenerativeAI, GenerativeModel, type EmbedContentRequest, TaskType } from "@google/generative-ai";
+import {
+  GoogleGenAI,
+  mcpToTool,
+} from "@google/genai";
 
-export class GeminiService {
+import type { Client } from "@modelcontextprotocol/sdk/client";
+
+class GeminiService {
   private static instance: GeminiService;
-  private apikey: string;
+
+  private ai: GoogleGenAI;
   private modelName: string;
-  private genAi: GoogleGenerativeAI;
-  private model: GenerativeModel;
-  private embeddingModel: GenerativeModel;
 
-  private constructor(apikey: string, modelName: string) {
+  private constructor(modelName: string = process.env.GEMINI_MODEL!) {
+    const apiKey = process.env.GEMINI_API_KEY!;
 
-    this.apikey =
-      apikey?.trim();
-
-    this.modelName =
-      modelName?.trim();
-
-    if (!this.apikey) {
-
-      throw new Error(
-        "API key is required for GeminiService"
-      );
+    if (!apiKey) {
+      throw new Error("GEMINI_API_KEY is missing");
     }
 
-    if (!this.modelName) {
-
-      throw new Error(
-        "Model name is required for GeminiService"
-      );
+    if (!modelName) {
+      throw new Error("GEMINI_MODEL is missing");
     }
+
+    this.modelName = modelName;
+
+    this.ai = new GoogleGenAI({
+      apiKey,
+    });
 
     console.log(
-      `[GeminiService] Initialized with model: "${this.modelName}"`
+      `[GeminiService] Using model ${this.modelName}`
     );
-
-    this.genAi =
-      new GoogleGenerativeAI(
-        this.apikey
-      );
-
-    const embeddingModelName = process.env.GEMINI_EMBEDDING_MODEL_NAME || "text-embedding-004";
-    this.embeddingModel = this.genAi.getGenerativeModel({ model: embeddingModelName });
-
-
-    this.model =
-      this.genAi.getGenerativeModel({
-        model: this.modelName
-      });
   }
 
-  public static getInstance(): GeminiService {
+  static getInstance() {
     if (!GeminiService.instance) {
-      if (!process.env.GEMINI_API_KEY || !process.env.GEMINI_MODEL_NAME) {
-        throw new Error("GEMINI_API_KEY and GEMINI_MODEL_NAME must be set in environment variables.");
-      }
-      GeminiService.instance = new GeminiService(process.env.GEMINI_API_KEY, process.env.GEMINI_MODEL_NAME);
+      GeminiService.instance = new GeminiService();
     }
+
     return GeminiService.instance;
   }
 
   async generateResponse(prompt: string): Promise<string> {
+    const response = await this.ai.models.generateContent({
+      model: this.modelName,
 
-    try {
+      contents: [
+        {
+          role: "user",
+          parts: [
+            {
+              text: prompt,
+            },
+          ],
+        },
+      ],
+    });
+    /*console.log(
+  JSON.stringify(response, null, 2)
+);*/
 
-      // Get a clean model instance to ensure no default tools are attached
-      const model = this.genAi.getGenerativeModel({ model: this.modelName });
+    return response.text ?? "";
+  }
 
-      const result = await model.generateContent(prompt);
+  async generateResponseWithTools(
+  prompt: string,
+  mcpClient: Client
+): Promise<string> {
 
-      const response =
-        result.response;
+  const response = await this.ai.models.generateContent({
+    model: this.modelName,
 
-      if (
-        !response.candidates ||
-        response.candidates.length === 0
-      ) {
+    contents: [
+      {
+        role: "user",
+        parts: [
+          {
+            text: prompt,
+          },
+        ],
+      },
+    ],
 
-        return (
-          "The AI did not return any results."
-        );
-      }
+    config: {
+      systemInstruction: {
+        role: "system",
+        parts: [
+          {
+            text: `
+You are an intelligent AI assistant with access to external tools through the Model Context Protocol (MCP).
 
-      return response.text;
+Your goal is to provide accurate, helpful, and trustworthy responses by selecting the most appropriate tool when needed. Do not use tools unnecessarily.
 
-    } catch (error: any) {
+# Available Capabilities
 
-      console.error(
-        "Gemini Error:",
-        error
+You can access:
+
+- MCP Tools
+  - Order Management
+  - Customer Management
+  - Weather Information
+  - Database Operations
+  - Any additional MCP tools registered at runtime
+
+- RAG Search
+  - Company knowledge base
+  - Product documentation
+  - Internal documentation
+  - FAQs
+  - Policies
+  - Manuals
+  - Uploaded documents
+
+- Large Language Model (General Knowledge)
+  - Programming
+  - Science
+  - Mathematics
+  - Technology
+  - Health and fitness
+  - History
+  - Geography
+  - Writing
+  - General reasoning
+  - General world knowledge
+
+--------------------------------------------------
+TOOL SELECTION RULES
+--------------------------------------------------
+
+Before answering, determine whether a tool is actually required.
+
+Use MCP tools when the user asks about:
+
+- orders
+- customers
+- weather
+- products
+- inventory
+- business records
+- application data
+- database information
+- company operations
+
+Use the RAG tool ONLY when the question is about:
+
+- company documentation
+- company policies
+- internal knowledge
+- employee documentation
+- product documentation
+- uploaded files
+- manuals
+- technical documentation
+- FAQs stored in the knowledge base
+
+Do NOT use RAG for:
+
+- programming questions
+- mathematics
+- science
+- health
+- fitness
+- nutrition
+- history
+- geography
+- language learning
+- interview questions
+- coding help
+- general AI questions
+- general world knowledge
+- casual conversation
+
+Answer these directly using your own knowledge.
+
+--------------------------------------------------
+MULTIPLE TOOLS
+--------------------------------------------------
+
+If multiple tools are required:
+
+- Use every relevant tool.
+- Combine the results into one natural response.
+- Clearly distinguish information from different sources when necessary.
+
+--------------------------------------------------
+DATABASE RULES
+--------------------------------------------------
+
+Never:
+
+- generate SQL
+- expose SQL queries
+- assume schemas
+- fabricate database records
+
+Always retrieve database information through MCP tools.
+
+--------------------------------------------------
+RAG RULES
+--------------------------------------------------
+
+When using RAG:
+
+1. Search the knowledge base.
+2. Use retrieved context as the primary source.
+3. Cite or summarize only retrieved information.
+4. Never invent missing documentation.
+
+If RAG returns no relevant documents:
+
+- Do NOT say "I don't have enough information."
+- Do NOT refuse the question automatically.
+- If the user's question is a general knowledge question, answer it using your own knowledge.
+- Only state that the knowledge base has no relevant information when the user specifically asks about company or internal documentation.
+
+--------------------------------------------------
+GENERAL KNOWLEDGE
+--------------------------------------------------
+
+You are allowed to answer general knowledge questions directly without using any tools.
+
+Examples:
+
+✔ What is Python?
+✔ How do I lose weight?
+✔ Explain calorie deficit.
+✔ What is machine learning?
+✔ Explain transformers.
+✔ What is an API?
+
+These should be answered from your own knowledge unless the user explicitly asks about company documentation.
+
+--------------------------------------------------
+RESPONSE STYLE
+--------------------------------------------------
+
+- Be concise and accurate.
+- Prefer tool results whenever tools are appropriate.
+- Prefer general reasoning when tools are unnecessary.
+- Never fabricate tool outputs.
+- Never fabricate database records.
+- Never fabricate RAG results.
+- If a tool fails, explain the failure and continue with general knowledge only if appropriate.
+            `,
+          },
+        ],
+      },
+
+      thinkingConfig: {
+        thinkingBudget: 0,
+      },
+
+      tools: [
+        mcpToTool(mcpClient),
+      ],
+    },
+  });
+
+  
+
+  return this.extractResponseText(response);
+}
+   private extractResponseText(response: any): string {
+
+  const candidate = response?.candidates?.[0];
+
+  if (!candidate) {
+    return "";
+  }
+
+  const parts = candidate.content?.parts ?? [];
+
+  for (const part of parts) {
+
+    if (part.text) {
+      return part.text.trim();
+    }
+
+    if (part.functionResponse?.response?.structuredContent) {
+      return JSON.stringify(
+        part.functionResponse.response.structuredContent,
+        null,
+        2
       );
+    }
 
-      throw new Error(
-        `Failed to generate response: ${error.message}`
+    if (part.functionResponse?.response) {
+      return JSON.stringify(
+        part.functionResponse.response,
+        null,
+        2
       );
     }
   }
 
-  async generateEmbeddings(data: string | string[], taskType: TaskType): Promise<number[][]> {
-  try
-  {
-    const requests: EmbedContentRequest[] = (Array.isArray(data) ? data : [data]).map(text => ({
-      content: { role: "user", parts: [{ text }] },
-      taskType: taskType,
-    }));
+  return response.text ?? "";
+}
 
-    const result = await this.embeddingModel.batchEmbedContents({ requests });
-    return result.embeddings.map(e => e.values);
+  async generateEmbeddings(
+    data: string | string[]
+  ): Promise<number[][]> {
 
-  } catch (error: any) {
-    console.error(
-      "Gemini Embedding Error:",
-      error
-    );
-    throw new Error(
-      `Failed to generate embeddings: ${error.message}`
-    );}
+    const texts = Array.isArray(data)
+      ? data
+      : [data];
+
+    const embeddings: number[][] = [];
+
+    for (const text of texts) {
+      const result = await this.ai.models.embedContent({
+        model: "gemini-embedding-001",
+
+        contents: text,
+
+        config: {
+          taskType: "RETRIEVAL_DOCUMENT",
+        },
+      });
+
+     if (
+  result.embeddings &&
+  result.embeddings.length > 0 &&
+  result.embeddings[0].values
+) {
+  embeddings.push(result.embeddings[0].values);
+} else {
+  throw new Error("Embedding generation failed.");
+}
+    }
+
+    return embeddings;
   }
 }
+
+export const GEMINI = GeminiService.getInstance();

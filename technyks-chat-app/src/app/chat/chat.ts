@@ -6,6 +6,7 @@ import { ChatService } from '../services/chat/chat.service';
 
 @Component({
   selector: 'app-chat',
+  standalone: true,
   imports: [FormsModule],
   templateUrl: './chat.html',
   styleUrl: './chat.scss'

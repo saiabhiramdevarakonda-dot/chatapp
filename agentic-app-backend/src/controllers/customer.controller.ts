@@ -1,24 +1,31 @@
-import { MOCK_CUSTOMERS } from "../data/customers.ts";
 import type { Request, Response } from "express";
-
+import { customerService } from "../services/customer.service.ts";
 export class CustomerController {
-    static getAllCustomers(req: Request, res: Response) {
-        res.json(MOCK_CUSTOMERS);
-    }
-    static getCustomerById(req: Request, res: Response) {
-        const id = parseInt(req.params.id as string, 10);
+    static async getAllCustomers(req: Request, res: Response) {
+       try{
+        const {limit} = req.query;
 
-        if (isNaN(id)) {
-            res.status(400).json({ message: 'Invalid customer ID. ID must be a number.' });
-            return;
-        }
-
-        const customer = MOCK_CUSTOMERS.find((c) => c.id === id);
-        if (customer) {
-            res.json(customer);
-        }
-        else {
-            res.status(404).json({ message: 'Customer not found' });
-        }
+        const customers = await customerService.getAllCustomers(limit ? Number(limit) : undefined);
+        res.json(customers);
+       }
+       catch(error){
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
+       }
     }
+    static async getCustomerById(req: Request, res: Response) {
+        try{
+            const id =  req.params;
+            const customer =  await customerService.getCustomerById(Number(id));
+            if(!customer){;
+        if(!customer){
+          return res.status(404).json({ message: 'Customer not found' });
+        }
+        res.json(customer);
+    }
+    }catch(error){
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
+       }
+}
 }

@@ -1,0 +1,23 @@
+<div class="chat-container">
+  <div class="chat-header">
+    <h1>Agentic Chat</h1>
+  </div>
+  <div class="chat-messages">
+    @for (msg of messages; track $index) {
+      <div class="message" [class.user-message]="msg.isUser" [class.agent-message]="!msg.isUser">
+        <div class="message-bubble">{{ msg.text }}</div>
+      </div>
+    }
+    @if (isLoading) {
+      <div class="message agent-message">
+        <div class="message-bubble typing-indicator">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    }
+  </div>
+  <div class="chat-input">
+    <input type="text" [(ngModel)]="userInput" (keyup.enter)="sendMessage()" placeholder="Type your message...">
+    <button (click)="sendMessage()" [disabled]="isLoading">Send</button>
+  </div>
+</div>

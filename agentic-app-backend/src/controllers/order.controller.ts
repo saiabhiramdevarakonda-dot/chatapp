@@ -1,24 +1,48 @@
-import { MOCK_ORDERS } from "../data/orders.data.ts";
 import type { Request, Response } from "express";
+import { OrderService } from "../services/order.service.ts";
 
 export class OrderController {
-    static getAllOrders(req: Request, res: Response) {
-        res.json(MOCK_ORDERS);
-    }   
-    static getOrderById(req: Request, res: Response) {
-        const id = parseInt(req.params.id as string, 10);
+  // Get all orders
+  static async getAllOrders(req: Request, res: Response) {
+    try {
+      const limit =
+        typeof req.query.limit === "string"
+          ? Number(req.query.limit)
+          : undefined;
 
-        if (isNaN(id)) {
-            res.status(400).json({ message: 'Invalid order ID. ID must be a number.' });
-            return;
-        }
+      const orders = await OrderService.getLatestOrders(limit);
 
-        const order = MOCK_ORDERS.find((o) => o.id === id);
-        if (order) {
-            res.json(order);
-        }
-        else {
-            res.status(404).json({ message: 'Order not found' });
-        }
+      res.json(orders);
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+      res.status(500).json({
+        message: "Error fetching orders",
+      });
     }
+  }
+
+  // Get order by ID
+  static async getOrderById(req: Request, res: Response) {
+    try {
+      const id =
+        typeof req.params.id === "string"
+          ? req.params.id
+          : "";
+
+      const order = await OrderService.getOrdersById(id);
+
+      if (!order) {
+        return res.status(404).json({
+          message: "Order not found",
+        });
+      }
+
+      res.json(order);
+    } catch (error) {
+      console.error("Error fetching order:", error);
+      res.status(500).json({
+        message: "Error fetching order",
+      });
+    }
+  }
 }
