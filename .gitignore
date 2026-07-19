@@ -1,8 +1,12 @@
-# Ignore node modules 
+# Ignore node modules
 node_modules/
 
-# Ignore all .env files
+# Ignore all environment files
 **/.env
+**/.env.*
+
+# Allow example environment file
+!**/.env.example
 
 # Ignore build folders
 **/dist
