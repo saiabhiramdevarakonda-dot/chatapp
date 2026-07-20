@@ -1,12 +1,217 @@
-main{
-    &::-webkit-scrollbar{
-        width: 8px;
-    }
-    &::-webkit-scrollbar-track{
-        background: transparent;
-    }
-    &::-webkit-scrollbar-thumb{
-        background: #4a5568;
-        border-radius: 10px;
-    }
-} 
+/* ===========================
+   Chat Container
+=========================== */
+
+:host {
+  display: block;
+  height: 100vh;
+}
+
+/* ===========================
+   Background
+=========================== */
+
+body {
+  overflow: hidden;
+}
+
+/* ===========================
+   Scrollbar
+=========================== */
+
+main {
+  scroll-behavior: smooth;
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(100, 116, 139, .6);
+    border-radius: 20px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgba(20, 184, 166, .8);
+  }
+}
+
+/* ===========================
+   Fade Animation
+=========================== */
+
+@keyframes fadeInUp {
+
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+.animate-fade-in {
+  animation: fadeInUp .35s ease;
+}
+
+/* ===========================
+   Floating Animation
+=========================== */
+
+@keyframes floating {
+
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+
+}
+
+.bi-stars {
+  animation: floating 4s ease-in-out infinite;
+}
+
+/* ===========================
+   Glass Effects
+=========================== */
+
+header {
+
+  backdrop-filter: blur(18px);
+
+}
+
+footer {
+
+  backdrop-filter: blur(18px);
+
+}
+
+input {
+
+  transition: .3s;
+
+}
+
+input:focus {
+
+  transform: scale(1.01);
+
+}
+
+/* ===========================
+   Buttons
+=========================== */
+
+button {
+
+  transition: all .25s ease;
+
+}
+
+button:hover:not(:disabled) {
+
+  transform: translateY(-2px);
+
+}
+
+button:active:not(:disabled) {
+
+  transform: scale(.96);
+
+}
+
+/* ===========================
+   Chat Bubble Animation
+=========================== */
+
+@keyframes bubble {
+
+  from {
+
+    opacity: 0;
+
+    transform: scale(.96);
+
+  }
+
+  to {
+
+    opacity: 1;
+
+    transform: scale(1);
+
+  }
+
+}
+
+.rounded-\[24px\] {
+
+  animation: bubble .25s ease;
+
+}
+
+/* ===========================
+   Welcome Logo
+=========================== */
+
+.w-28.h-28 {
+
+  box-shadow:
+    0 0 40px rgba(20,184,166,.25),
+    0 0 100px rgba(6,182,212,.15);
+
+}
+
+/* ===========================
+   Input
+=========================== */
+
+input::placeholder {
+
+  color: rgb(100 116 139);
+
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media (max-width:768px){
+
+  header{
+
+    padding:18px;
+
+  }
+
+  footer{
+
+    padding:18px;
+
+  }
+
+  main{
+
+    padding:20px;
+
+  }
+
+}
