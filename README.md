@@ -1,285 +1,162 @@
 # 🤖 Agentic AI Chat Application
 
-An end-to-end **Agentic AI Chat Application** built with **Angular**, **Node.js**, **Express**, **MongoDB**, **Google Gemini/OpenAI**, **Model Context Protocol (MCP)**, and **Retrieval-Augmented Generation (RAG)**.
+An end-to-end **Agentic AI Chat Application** built with Angular, Node.js, Express.js, MongoDB, Google Gemini, OpenAI, Model Context Protocol (MCP), and Retrieval-Augmented Generation (RAG).
 
-The application demonstrates how Large Language Models (LLMs) can intelligently use tools, retrieve knowledge from documents, and interact with a real MongoDB database to answer user queries and perform actions.
+This project demonstrates how Large Language Models (LLMs) can retrieve relevant knowledge, invoke tools, interact with databases, and execute tasks through natural language conversations.
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Angular-Frontend-DD0031?style=for-the-badge&logo=angular&logoColor=white" alt="Angular" />
+  <img src="https://img.shields.io/badge/Node.js-Backend-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js" />
+  <img src="https://img.shields.io/badge/TypeScript-Language-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/MongoDB-Database-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB" />
+  <img src="https://img.shields.io/badge/AI-Agentic%20AI-8A2BE2?style=for-the-badge" alt="Agentic AI" />
+</p>
 
 ---
 
-# 🚀 Features
+## ✨ Features
 
 ### 💬 AI Chat Assistant
+- Natural language conversations
+- Integration with Google Gemini and OpenAI
+- Context-aware AI-generated responses
 
-* Natural language conversations
-* Powered by Google Gemini/OpenAI
-* Context-aware responses
-
-### 🛠️ Agentic AI
-
-* Model Context Protocol (MCP)
-* Intelligent tool selection
-* Multi-step reasoning
-* Tool calling
+### 🧠 Agentic AI & Model Context Protocol
+- MCP server and tool integration
+- AI-driven tool selection and invocation
+- Multi-step task execution
+- Interaction between LLMs and backend services
 
 ### 📦 Order Management
-
-* View all orders
-* Search order by ID
-* Search customer orders
-* Create new orders
-* MongoDB persistence
+- Retrieve orders
+- Search orders by ID
+- Find orders associated with customers
+- Create new orders
+- MongoDB-backed data persistence
 
 ### 👥 Customer Management
+- Retrieve customer records
+- Search customers
+- Database integration through Mongoose
 
-* View customers
-* Search customers
-* MongoDB integration
-
-### 📚 RAG (Retrieval-Augmented Generation)
-
-* Local knowledge base
-* Semantic retrieval
-* AI-generated answers using retrieved context
+### 📚 Retrieval-Augmented Generation (RAG)
+- Local knowledge base
+- Semantic retrieval of relevant information
+- Context-grounded AI responses
 
 ### 🌦️ External Tool Integration
+- Weather information retrieval
+- MCP tools for supported services
+- Integration of external data into AI workflows
 
-* Weather tool support
-* Multiple MCP tools
+### 🗄️ Database Integration
+- MongoDB
+- Mongoose ODM
+- Database-backed CRUD operations
 
-### 🗄️ Database
+### 🎨 Web Interface
+- Angular frontend
+- Chat-oriented user interface
+- Backend API integration
 
-* MongoDB
-* Mongoose ODM
-* Real-time CRUD operations
+---
+
+## 🛠️ Tech Stack
 
 ### 🎨 Frontend
 
-* Angular
-* Responsive UI
-* Chat interface
+<p>
+  <img src="https://skillicons.dev/icons?i=angular,typescript,html,css,sass" alt="Angular, TypeScript, HTML, CSS, Sass" />
+</p>
+
+### ⚙️ Backend
+
+<p>
+  <img src="https://skillicons.dev/icons?i=nodejs,express,typescript" alt="Node.js, Express.js, TypeScript" />
+</p>
+
+### 🤖 AI & LLM Integration
+
+<p>
+  <img src="https://img.shields.io/badge/Google%20Gemini-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white" alt="Google Gemini" />
+  <img src="https://img.shields.io/badge/OpenAI-412991?style=for-the-badge&logo=openai&logoColor=white" alt="OpenAI" />
+  <img src="https://img.shields.io/badge/Model%20Context%20Protocol-MCP-2F6F9F?style=for-the-badge" alt="Model Context Protocol" />
+  <img src="https://img.shields.io/badge/RAG-Retrieval--Augmented%20Generation-0A7E8C?style=for-the-badge" alt="RAG" />
+</p>
+
+### 🗄️ Database
+
+<p>
+  <img src="https://skillicons.dev/icons?i=mongodb" alt="MongoDB" />
+  <img src="https://img.shields.io/badge/Mongoose-880000?style=for-the-badge&logo=mongoose&logoColor=white" alt="Mongoose" />
+</p>
+
+### 🧰 Development Tools & Deployment
+
+<p>
+  <img src="https://skillicons.dev/icons?i=git,github,vscode,postman" alt="Git, GitHub, Visual Studio Code, Postman" />
+  <img src="https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=black" alt="Render" />
+</p>
 
 ---
 
-# 🏗️ Architecture
+## 🏗️ Architecture
 
+```text
+                         ┌────────────────────┐
+                         │        User        │
+                         └─────────┬──────────┘
+                                   │
+                                   ▼
+                         ┌────────────────────┐
+                         │  Angular Frontend  │
+                         └─────────┬──────────┘
+                                   │ HTTP / REST API
+                                   ▼
+                         ┌────────────────────┐
+                         │   Express Backend  │
+                         └─────────┬──────────┘
+                                   │
+                                   ▼
+                         ┌────────────────────┐
+                         │      AI Agent      │
+                         └─────────┬──────────┘
+                                   │
+                 ┌─────────────────┼─────────────────┐
+                 │                 │                 │
+                 ▼                 ▼                 ▼
+        ┌────────────────┐ ┌──────────────┐ ┌────────────────┐
+        │   MCP Tools     │ │     RAG      │ │    MongoDB     │
+        ├────────────────┤ ├──────────────┤ ├────────────────┤
+        │ Customer Tool  │ │ Knowledge    │ │ Customers      │
+        │ Order Tool     │ │ Base         │ │ Orders         │
+        │ Weather Tool   │ │              │ │                │
+        └────────────────┘ └──────────────┘ └────────────────┘
 ```
-User
-   │
-   ▼
-Angular Frontend
-   │
-   ▼
-Express Backend
-   │
-   ▼
-AI Agent
-   │
-   ├──────────────► MCP Tools
-   │                  │
-   │                  ├── Customer Tool
-   │                  ├── Order Tool
-   │                  └── Weather Tool
-   │
-   ├──────────────► RAG
-   │                  │
-   │                  └── Knowledge Base
-   │
-   └──────────────► MongoDB
-```
+
+### Architecture Overview
+
+1. The user sends a message through the Angular interface.
+2. The backend receives and processes the request.
+3. The AI integration generates a response or selects a supported tool.
+4. MCP tools interact with supported services and backend operations.
+5. RAG retrieves relevant information from the knowledge base when applicable.
+6. MongoDB stores and retrieves application data.
+7. The backend returns the result to the frontend.
 
 ---
 
-# 🛠️ Tech Stack
+## 📁 Project Structure
 
-## Frontend
-
-* Angular
-* TypeScript
-* HTML
-* CSS
-
-## Backend
-
-* Node.js
-* Express.js
-* TypeScript
-
-## AI
-
-* Google Gemini
-* OpenAI
-* MCP SDK
-* RAG
-
-## Database
-
-* MongoDB
-* Mongoose
-
-## Development Tools
-
-* Git
-* GitHub
-* VS Code
-* Postman
-
----
-
-# 📁 Project Structure
-
-```
+```text
 chatapp/
-│
-├── technyks-chat-app/        # Angular Frontend
-│
-├── chat-app-backend/         # Chat Backend
-│
-├── agentic-app-backend/      # Agent Backend
-│   ├── controllers/
-│   ├── models/
-│   ├── routes/
-│   ├── services/
-│   ├── mcp/
-│   ├── rag/
-│   ├── data/
-│   └── config/
-│
-└── README.md
-```
-
----
-
-# ⚙️ Installation
-
-## Clone Repository
-
-```bash
-git clone https://github.com/saiabhiramdevarakonda-dot/chatapp.git
-
-cd chatapp
-```
-
----
-
-## Install Dependencies
-
-```bash
-npm install
-```
-
-Install dependencies inside:
-
-* technyks-chat-app
-* chat-app-backend
-* agentic-app-backend
-
----
-
-## Environment Variables
-
-Create a `.env` file inside the backend project.
-
-Example:
-
-```env
-PORT=3000
-
-MONGODB_URI=mongodb://localhost:27017/testDB
-
-OPENAI_API_KEY=YOUR_OPENAI_KEY
-
-GEMINI_API_KEY=YOUR_GEMINI_KEY
-```
-
----
-
-## Start MongoDB
-
-```bash
-mongod
-```
-
----
-
-## Start Backend
-
-```bash
-cd agentic-app-backend
-
-npm run dev
-```
-
----
-
-## Start Angular Frontend
-
-```bash
-cd technyks-chat-app
-
-ng serve
-```
-
----
-
-# 💬 Example Prompts
-
-```
-Show all orders
-
-Create an order for customer <customer-id>
-
-Show customer details
-
-What's the weather in Hyderabad?
-
-Answer questions from the knowledge base.
-```
-
----
-
-
-# 🎯 Learning Outcomes
-
-This project demonstrates:
-
-* Agentic AI
-* MCP (Model Context Protocol)
-* Tool Calling
-* RAG
-* MongoDB Integration
-* REST APIs
-* Angular Frontend
-* Express Backend
-* TypeScript
-* LLM Integration
-* Full-Stack AI Development
-
----
-
-# 🔮 Future Improvements
-
-* Authentication (JWT)
-* Role-Based Access Control
-* Conversation History
-* Docker Support
-* Kubernetes Deployment
-* Vector Database (FAISS/Pinecone)
-* CI/CD Pipeline
-* Unit & Integration Testing
-* Cloud Deployment (AWS/Azure/GCP)
-
----
-
-# 👨‍💻 Author
-
-**Abhiram Devarakonda**
-
-B.Tech Computer Science Engineering
-
-GitHub: https://github.com/saiabhiramdevarakonda-dot
-
----
-
-# ⭐ Acknowledgements
-
-This project was developed as part of an AI Agent/Agentic AI learning journey, demonstrating modern AI application development using LLMs, MCP, RAG, MongoDB, and Angular.
+├── technyks-chat-app/          # Angular frontend
+├── chat-app-backend/           # AI chat backend
+├── agentic-app-backend/        # Agentic backend
+│   ├── src/
+│   │   ├── controllers/
+│   │   ├── models/
+│   │   ├── routes/
+│   │   ├── services/
+│   │   └── ...
+│   ├── data/                   # Knowledge-base or application
